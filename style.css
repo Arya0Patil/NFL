@@ -1,0 +1,16 @@
+@keyframes subect{
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+.subject{
+    background-color: rgba(255, 105, 180, 0.364);
+    /* width: max-content; */
+    text-align: center;
+    margin: 15;
+    padding: 5;
+    animation-name: subect;
+    animation-duration: 2s;
+    /* animation-delay: 2s; */
+    /* opacity: 0; */
+   
+}
