@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Callback_Functions</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="callback-functions">Callback Functions</h1>
+<blockquote>
+<p><strong>A callback function is a function passed into another function as an argument, which is then &gt; invoked inside the outer function to complete some kind of routine or action.</strong></p>
+</blockquote>
+<pre class=" language-js"><code class="prism  language-js">myDiv<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">"click"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token comment">// do something!</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>Callbacks are functions that are executed asynchronously, or at a later time. Instead of the code reading top to bottom procedurally, async programs may execute different functions at different times based on the order and speed that earlier functions like http requests or file system reads happen.</p>
+<p>Let’s use node to read our number from a file called  <code>number.txt</code>:</p>
+<pre class=" language-js"><code class="prism  language-js"><span class="token keyword">var</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span> <span class="token comment">// require is a special function provided by node</span>
+<span class="token keyword">var</span> myNumber <span class="token operator">=</span> undefined <span class="token comment">// we don't know what the number is yet since it is stored in a file</span>
+
+<span class="token keyword">function</span> <span class="token function">addOne</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  fs<span class="token punctuation">.</span><span class="token function">readFile</span><span class="token punctuation">(</span><span class="token string">'number.txt'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token function">doneReading</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span> fileContents<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    myNumber <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>fileContents<span class="token punctuation">)</span>
+    myNumber<span class="token operator">++</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">addOne</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myNumber<span class="token punctuation">)</span> <span class="token comment">// logs out undefined -- this line gets run before readFile is done</span>
+</code></pre>
+<p>Why do we get  <code>undefined</code>  when we log out the number this time? In this code we use the  <code>fs.readFile</code>  method, which happens to be an asynchronous method. Usually things that have to talk to hard drives or networks will be asynchronous. If they just have to access things in memory or do some work on the CPU they will be synchronous. The reason for this is that I/O is reallyyy reallyyy sloowwww. A ballpark figure would be that talking to a hard drive is about 100,000 times slower than talking to memory (e.g. RAM).</p>
+<p>When we run this program all of the functions are immediately defined, but they don’t all execute immediately. This is a fundamental thing to understand about async programming. When  <code>addOne</code>  is called it kicks off a  <code>readFile</code>  and then moves on to the next thing that is ready to execute. If there is nothing to execute node will either wait for pending fs/network operations to finish or it will stop running and exit to the command line.<br>
+The reason we got <code>undefined</code> above is that nowhere in our code exists logic that tells the <code>console.log</code> statement to wait until the <code>readFile</code> statement finishes before it prints out the number.</p>
+<blockquote>
+<p>The key to understanding callbacks is to realize that they are used when you don’t know <strong>when</strong> some async operation will complete, but you do know <strong>where</strong> the operation will complete — the last line of the async function! The top-to-bottom order that you declare callbacks does not necessarily matter, only the logical/hierarchical nesting of them. First you split your code up into functions, and then use callbacks to declare if one function depends on another function finishing.</p>
+</blockquote>
+<p>Think of the restaurant example. At many restaurants you get a number to put on your table while you wait for your food. These are a lot like callbacks. They tell the server what to do after your cheeseburger is done.</p>
+<pre class=" language-js"><code class="prism  language-js"><span class="token keyword">var</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
+<span class="token keyword">var</span> myNumber <span class="token operator">=</span> undefined
+
+<span class="token keyword">function</span> <span class="token function">addOne</span><span class="token punctuation">(</span>callback<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  fs<span class="token punctuation">.</span><span class="token function">readFile</span><span class="token punctuation">(</span><span class="token string">'number.txt'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token function">doneReading</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span> fileContents<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    myNumber <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>fileContents<span class="token punctuation">)</span>
+    myNumber<span class="token operator">++</span>
+    <span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">logMyNumber</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myNumber<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">addOne</span><span class="token punctuation">(</span>logMyNumber<span class="token punctuation">)</span>
+</code></pre>
+<p>Now the  <code>logMyNumber</code>  function can get passed in as an argument that will become the  <code>callback</code>  variable inside the  <code>addOne</code>  function. After  <code>readFile</code>  is done the  <code>callback</code>  variable will be invoked (<code>callback()</code>). Only functions can be invoked, so if you pass in anything other than a function it will cause an error.</p>
+<p>When a function gets invoked in javascript the code inside that function will immediately get executed. In this case our log statement will execute since  <code>callback</code>  is actually  <code>logMyNumber</code>. Remember, just because you  <em>define</em>  a function it doesn’t mean it will execute. You have to  <em>invoke</em>  a function for that to happen.</p>
+</div>
+</body>
+
+</html>

@@ -11,27 +11,60 @@
         to{opacity: 1;}
     }
     .subject{
-        background-color: rgba(255, 105, 180, 0.364);
+        color: #fff;
+        background-color: #3F72AF;
+       
+        box-shadow: rgba(14, 14, 104, 0.2) 0px 7px 29px 0px;
+        border-radius: 5px;
         /* width: max-content; */
         text-align: center;
         margin: 15;
-        padding: 5;
+        font-size: large;
+        padding: 10px;
         animation-name: subect;
         animation-duration: 2s;
         /* animation-delay: 2s; */
         /* opacity: 0; */
+        
        
     }
+    
     #topicGrid{
         display: inline-grid;
-        grid-template-columns: auto auto auto auto auto auto;
+        grid-template-columns: auto auto auto auto auto;
         grid-auto-columns: 5;
         width:85%;
         font-size: large;
+        animation-name: subect;
+        animation-duration: 2s;
+      
     }
+    .subject-a{
+        color: #fff;
+        text-decoration: none;
+    }
+    .topic-a{
+        text-decoration: none;
+        background-color: #F9F7F7;
+        margin: 8px;
+        padding: 5px;
+       
+        border-radius: 5px;
+        /* height: 180%; */
+    }
+    
+
+    body {
+  background-color: #fff;
+}
+
+.dark-theme {
+  background-color: #000;
+}
 </style>
-<body style="background-color: antiquewhite;">
+<body id="body" style="background-color: #DBE2EF; color: #112D4E;">
     <br>
+    <button id="theme-toggle">Toggle Theme</button>
     <center><h1 style="animation-name: subect; animation-duration: 2s;">Welcome to Notes for Life</h1>
         <p style="animation-name: subect; animation-duration: 2s;">Study Clutter Free</p>
     </center>
@@ -39,32 +72,49 @@
 
 
     <center>
-        <h3 style="animation-name: subect; animation-duration: 2s;">Subjets</h3>
+        <h3 style="animation-name: subect; animation-duration: 2s;">Subjects</h3>
         <table style="width: 80%; align-content: center;" border="0">
             <tr>
-                <td style="text-align: center;"><div class="subject"><a href="WebTech/webtech.html"> Web-Technology </a></div></td>
-                <td><div class="subject"><a href="WebTech/webtech.html"> Web-Technology </a></div></td>
-                <td><div class="subject"><a href="WebTech/webtech.html"> Web-Technology </a></div></td>
+                <td><a class="subject-a" href="WebTech/webtech.html"><div class="subject">Web-Technology </div></a></td>
+                <td><div class="subject "><a class="subject-a"   href="WebTech/Javascript/javascript.html"> Web-Technology </a></div></td>
+                <td><div class="subject"><a  class="subject-a" href="WebTech/webtech.html"> Web-Technology </a></div></td>
+                <td><div class="subject"><a  class="subject-a" href="WebTech/webtech.html"> Web-Technology </a></div></td>
+                <td><div class="subject"><a  class="subject-a" href="WebTech/webtech.html"> Web-Technology </a></div></td>
+                <td><div class="subject"><a  class="subject-a" href="WebTech/webtech.html"> Web-Technology </a></div></td>
             </tr>
         </table>
     </center>
     <center>
-        <h4>Discover Topics</h4>
+        <h3>Discover Topics</h3>
         <div id="topicGrid">
-            <li><a href="WebTech/Javascript/Functions.md.html">JS Functions</a></li>
-            <li><a href="WebTech/Javascript/Promise.md.html">JS Promise</a></li>
-            <li><a href="WebTech/Javascript/jQUERY.md.html">jQuery</a></li>
-            <li><a href="WebTech/Javascript/Functions.md.html">JS Functions</a></li>
-            <li><a href="WebTech/Javascript/Functions.md.html">JS Functions</a></li>
-            <li><a href="WebTech/Javascript/Functions.md.html">JS Functions</a></li>
-            <li><a href="WebTech/Javascript/Functions.md.html">JS Functions</a></li>
-            <li><a href="WebTech/Javascript/Functions.md.html">JS Functions</a></li>
-            <li><a href="WebTech/Javascript/Functions.md.html">JS Functions</a></li>
-            <li><a href="WebTech/Javascript/Functions.md.html">JS Functions</a></li>
+            <a class="topic-a" href="WebTech/Javascript/Functions.md.html">JS Functions</a>
+            <a class="topic-a" href="WebTech/Javascript/Promise.md.html">JS Promise</a>
+            <a class="topic-a" href="WebTech/Javascript/jQUERY.md.html">jQuery</a>
+            <a class="topic-a" href="WebTech/Javascript/Callback_Functions.html">Callback Functions</a>
+            <a class="topic-a" href="WebTech/Javascript/Functions.md.html">JS Functions</a>
+            <a class="topic-a" href="WebTech/Javascript/Functions.md.html">JS Functions</a>
+            <a class="topic-a" href="WebTech/Javascript/Functions.md.html">JS Functions</a>
+            <a class="topic-a" href="WebTech/Javascript/Functions.md.html">JS Functions</a>
+            <a class="topic-a" href="WebTech/Javascript/Functions.md.html">JS Functions</a>
+            <a class="topic-a" href="WebTech/Javascript/Functions.md.html">JS Functions</a>
         </div>
     </center>
     <!-- <ul>
         <div class="subject"><a href="WebTech/webtech.html"> Web-Technology </a></div>
     </ul> -->
+
+    <script>
+        const toggleThemeButton = document.getElementById('theme-toggle');
+
+        function changeTheme(){
+          document.getElementId("body").style;
+          
+        }
+
+toggleThemeButton.addEventListener('click', () => {
+  const body = document.querySelector('body');
+  body.classList.toggle('dark-theme');
+});
+    </script>
 </body>
 </html>
