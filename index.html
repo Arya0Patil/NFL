@@ -62,9 +62,9 @@
   background-color: #000;
 }
 </style>
-<body id="body" style="background-color: #DBE2EF; color: #112D4E;">
+<body id="body1" style="background-color: #DBE2EF; color: #112D4E;">
     <br>
-    <button id="theme-toggle">Toggle Theme</button>
+    <button id="theme-toggle" onclick="dark()">Toggle Theme</button>
     <center><h1 style="animation-name: subect; animation-duration: 2s;">Welcome to Notes for Life</h1>
         <p style="animation-name: subect; animation-duration: 2s;">Study Clutter Free</p>
     </center>
@@ -104,17 +104,23 @@
     </ul> -->
 
     <script>
-        const toggleThemeButton = document.getElementById('theme-toggle');
-
-        function changeTheme(){
-          document.getElementId("body").style;
-          
+       var bodyRef = document.getElementById("body1")
+        var isDark = false;
+       function dark(){
+        if(isDark){
+           
+            bodyRef.style.backgroundColor = "#DBE2EF";
+        bodyRef.style.color = "#112D4E";
+            isDark=false;
         }
 
-toggleThemeButton.addEventListener('click', () => {
-  const body = document.querySelector('body');
-  body.classList.toggle('dark-theme');
-});
+       else{
+        bodyRef.style.backgroundColor = "black";
+        bodyRef.style.color = "white";
+        isDark =true;
+       }
+        
+       }
     </script>
 </body>
 </html>
